@@ -29,12 +29,12 @@ class Sparkline
       :chco => 336699,
       :chls => "1,1,0",
       :chxt => "r,x,y",
-      :chxs => "0,990000,11,0,_|1,990000,1,0,_|2,990000,1,0,_"
+      :chxs => "0,990000,11,0,_|1,990000,1,0,_|2,009900,11,0,_"
     }
     
-    options[:chm] = "o,990000,0,#{@normalized_data.length},5" 
-    options[:chxl] = "0:|#{sprintf("%.2f", @data.last.to_f)}|1:||2:||"
-    options[:chxp] = "0,#{@normalized_data.last}"
+    options[:chm] = "o,009900,0,0,5,|o,990000,0,#{@normalized_data.length},5" 
+    options[:chxl] = "0:|#{sprintf("%.2f", @data.last.to_f)}|1:||2:|#{sprintf("%.2f", @data.first.to_f)}|"
+    options[:chxp] = "0,#{@normalized_data.last}|2,#{@normalized_data.first}"
     options[:chs] = "#{@width}x#{@height}"
     options[:chd] = "t:" + data_str
         
@@ -98,8 +98,3 @@ data = 1000.times.inject([]) { |m, k| m << rand }
 sparkline = Sparkline.new( data, :height => 100, :width => 500 )
 puts sparkline.google_img_url
 # => "http://chart.apis.google.com/chart?chxt=r,x,y&chd=t:41.5,34.3,63.4,45.0,50.5,35.7,40.6,54.9,62.0,60.6,53.2,44.9,62.4,61.8,53.5,58.5,60.4,64.6,64.5,49.8,49.3,61.4,46.4,50.8,36.1,46.5,52.8,39.7,44.4,42.3,57.6,45.6,34.1,49.0,64.1,61.4,59.9,34.0,43.9,44.8,40.4,34.0,60.3,36.8,56.1,63.1,52.7,39.6,51.9,39.0&chxs=0,990000,11,0,_|1,990000,1,0,_|2,990000,1,0,_&chm=o,990000,0,50,5&cht=lc&chxl=0:|0.17|1:||2:||&chco=336699&chxp=0,38.9904542844803&chls=1,1,0&chs=500x100"
-
-data = File.open("co2_ppm", "r").readlines.collect(&:to_f)
-sparkline = Sparkline.new( data, :height => 150, :width => 500 )
-puts sparkline.google_img_url
-
